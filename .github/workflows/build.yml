@@ -16,7 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     #Jobs Steps:
     steps:
-      #Checkout repository under Github Workspace, so you can access it
       - uses: actions/checkout@v1
       #Set up JDK11
       - name: Set up JDK
