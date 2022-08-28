@@ -15,7 +15,7 @@ jobs:
     #Run on ubuntu
     runs-on: ubuntu-latest
     #Jobs Steps:
-    steps:
+    step:
       - uses: actions/checkout@v1
       #Set up JDK11
       - name: Set up JDK
