@@ -24,27 +24,26 @@ jobs:
       #Run Tests
       - name: Run Tests
         run: mvn -B test
-  quality:
+  #build Stage
+  build:
+    name: Build Artifact
     needs: tests
     runs-on: ubuntu-latest
     steps:
-      - name: Checkouts
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v1
+      - name: Setup JDK
+        uses: actions/setup-java@v1
         with:
-          fetch-depth: 0
-    #Quality Check
-      - name: Git Quality Check
-        uses: gcattan/git-quality-check@v0.0-beta
+          java-version: '17'
+    #Build Application Using Maven
+      - name: Build with maven
+        run: mvn - B package -DskipTests --file pom.xml
+      #BUILD THE ARTIFACT
+      - name: Upload War Artifact
+        #This upload our artifacts from workflow allowing to share data between jobs and store data once a workflow is complete.
+        uses: actions/upload-artifact@v2
         with:
-          mainBranches: origin/main
-      - name: Check Outputs
-        run: |
-          test "${{ steps.git-quality-check.outputs.score }}' != '"
-      - name: Create badge
-        uses: RubbaBoy/BYOB@v1.2.1
-        with:
-          NAME: score
-          LABEL: 'GIT QUALITY SCORE'
-          STATUS: ${{ steps.git-quality-check.outputs.score }}
-          COLOR: 00EEFF
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #set artifact name
+          name: artifact
+          #From:
+          path: target/data-0.0.1-SNAPSHOT.war
