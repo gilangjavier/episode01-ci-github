@@ -1,0 +1,38 @@
+#Workflow Name
+name: CI Pipelina for Github Actions
+on:
+  #manual trigger workflow
+  workflow_dspatch:
+  #trigger the workflow on push from the main branch
+  push:
+    branches:
+      - main
+
+jobs:
+  #Job for testing App
+  tests:
+    name: Test Stage
+    #Run on ubuntu
+    runs-on: ubuntu-latest
+    #Jobs Steps:
+    steps:
+      #Checkout repository under $GITHUB_WORKSPACE
+      - uses: actions/checkout@v1
+      #Set up JDK11
+      - name: Set up JDK
+      - uses: actions/setup-java@v1
+      with:
+        java-version: '11'
+        
+      #Set up Maven Cache
+      - name: Maven Cache
+      #This actions allowing caching dependencies and build output to improve workflow execution.
+      uses : actions/cache@v1
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+
+      #Run Stage
+      - name: Run Stage
+        run: mvn -B test
