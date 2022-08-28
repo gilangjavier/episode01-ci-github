@@ -27,6 +27,7 @@ jobs:
   quality:
     needs: tests
     name: Github Quality Analysis
+    uses: actions/checkout@v2
     runs-on: ubuntu-latest
     steps:
       - name: Checkouts
