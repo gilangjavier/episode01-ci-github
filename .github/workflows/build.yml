@@ -37,7 +37,7 @@ jobs:
           java-version: '17'
     #Build Application Using Maven
       - name: Build with maven
-        run: mvn - B package -DskipTests --file pom.xml
+        run: mvn -B package -DskipTests --file pom.xml
       #BUILD THE ARTIFACT
       - name: Upload War Artifact
         #This upload our artifacts from workflow allowing to share data between jobs and store data once a workflow is complete.
