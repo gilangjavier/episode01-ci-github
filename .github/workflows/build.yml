@@ -25,26 +25,25 @@ jobs:
       - name: Run Tests
         run: mvn -B test
   quality:
-    build-linux:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkouts
-          uses: actions/checkout@v1
-          with:
-            fetch-depth: 0
-      #Quality Check
-        - name: Git Quality Check
-          uses: gcattan/git-quality-check@v0.0-beta
-          with:
-            mainBranches: origin/main
-        - name: Check Outputs
-          run: |
-            test "${{ steps.git-quality-check.outputs.score }}" != ""
-        - name: Create badge
-          uses: RubbaBoy/BYOB@v1.2.1
-          with:
-            NAME: score
-            LABEL: 'GIT QUALITY SCORE'
-            STATUS: ${{ steps.git-quality-check.outputs.score }}
-            COLOR: 00EEFF
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkouts
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
+    #Quality Check
+      - name: Git Quality Check
+        uses: gcattan/git-quality-check@v0.0-beta
+        with:
+          mainBranches: origin/main
+      - name: Check Outputs
+        run: |
+          test "${{ steps.git-quality-check.outputs.score }}" != ""
+      - name: Create badge
+        uses: RubbaBoy/BYOB@v1.2.1
+        with:
+          NAME: score
+          LABEL: 'GIT QUALITY SCORE'
+          STATUS: ${{ steps.git-quality-check.outputs.score }}
+          COLOR: 00EEFF
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
