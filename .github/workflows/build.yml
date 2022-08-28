@@ -39,7 +39,7 @@ jobs:
           mainBranches: origin/main
       - name: Check Outputs
         run: |
-          test "${{ steps.git-quality-check.outputs.score }}"
+          test "${{ steps.git-quality-check.outputs.score }}" != ""
       - name: Create badge
         uses: RubbaBoy/BYOB@v1.2.1
         with:
